@@ -1,25 +1,72 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react'
+import {Scene} from './components/Scene';
+import ColorMaterial from './ColorMaterial';
+import {RubikCube} from './components/RubikCube';
+import {
+    asixNumtoLetter,
+    generateRandomIntegerInRange,
+    getBoxInitialPositions, getRandomDirection
+} from './utils';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    const [points, setPoints] = useState(getBoxInitialPositions());
+    const [animation, setAnimation] = useState(false);
+    const [rotationAxisLetter, setRotationAxisLetter] = useState(asixNumtoLetter(0));
+    const [rotationDirection, setRotationDirection] = useState('left');
+    const [rotatedFace, setRotatedFace] = useState(-1);
+    const [rotationSide, setRoatationSide] = useState(points.filter(point => {
+        if (point[rotationAxisLetter] === rotatedFace) {
+            return point;
+        }
+    }));
+    const [otherGroup, setOtherGroup] = useState(points.filter(point => {
+        if (point[rotationAxisLetter] !== rotatedFace) {
+            return point;
+        }
+    }));
+
+    useEffect(() => {
+        if (!animation) {
+            setTimeout(() => startRotate(), 500);
+        }
+    }, [animation]);
+
+    const startRotate = () => {
+        if (animation) {
+            return;
+        }
+        const newRotationNum = generateRandomIntegerInRange(0, 2);
+        setRotationAxisLetter(asixNumtoLetter(newRotationNum));
+        setRotatedFace(generateRandomIntegerInRange(-1, 1));
+
+        setRoatationSide(points.filter(point => {
+            if (point[asixNumtoLetter(newRotationNum)] === rotatedFace) {
+                return point;
+            }
+        }));
+
+        setOtherGroup(points.filter(point => {
+            if (point[asixNumtoLetter(newRotationNum)] !== rotatedFace) {
+                return point;
+            }
+        }));
+        setRotationDirection(getRandomDirection());
+        setAnimation(true);
+    }
+
+    return <>
+        {/*For Tests*/}
+        {/*<div style={{width: '80px', padding: '10px', background: 'red'}} onClick={startRotate}>Rotate!</div>*/}
+        <Scene>
+            <RubikCube animation={animation}
+                       setAnimation={setAnimation}
+                       setPoints={setPoints}
+                       rotationDirection={rotationDirection}
+                       rotationSide={rotationSide}
+                       otherGroup={otherGroup}
+                       rotationAxisLetter={rotationAxisLetter}/>
+        </Scene>
+    </>;
 }
 
 export default App;
