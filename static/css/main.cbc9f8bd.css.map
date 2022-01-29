@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/main.cbc9f8bd.css","mappings":"AAAA,KACE,SACF,CAEA,OACE,sBACF","sources":["index.css"],"sourcesContent":["body {\n  padding: 0;\n}\n\ncanvas {\n  height: 100vh !important;\n}"],"names":[],"sourceRoot":""}

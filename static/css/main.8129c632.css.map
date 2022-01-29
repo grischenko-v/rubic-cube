@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.8129c632.css","mappings":"AAAA,KAEE,QAAS,CADT,SAEF,CAEA,OACE,sBACF","sources":["index.css"],"sourcesContent":["body {\n  padding: 0;\n  margin: 0;\n}\n\ncanvas {\n  height: 100vh !important;\n}"],"names":[],"sourceRoot":""}
