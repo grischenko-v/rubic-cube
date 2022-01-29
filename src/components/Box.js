@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useMemo} from 'react';
+import * as THREE from 'three';
 
 const colors = {
     blue: 'blue',
@@ -10,20 +11,21 @@ const colors = {
 }
 
 export const Box = (props) => {
+    const geometry = useMemo(() => new THREE.BoxGeometry( 1, 1, 1 ), []);
+    const edges = useMemo(() => new THREE.EdgesGeometry( geometry ), []);
     return (
         <group dispose={null}>
-            <mesh {...props}>
+            <mesh {...props} castShadow={true} receiveShadow={true}>
                 <boxGeometry args={[1, 1, 1]}/>
-                <colorMaterial attachArray="material" color={colors.blue} />
-                <colorMaterial attachArray="material" color={colors.white} />
-                <colorMaterial attachArray="material" color={colors.red} />
-                <colorMaterial attachArray="material" color={colors.green} />
-                <colorMaterial attachArray="material" color={colors.yellow} />
-                <colorMaterial attachArray="material" color={colors.orange} />
+                <meshStandardMaterial attachArray="material" color={colors.blue}/>
+                <meshStandardMaterial attachArray="material" color={colors.white}/>
+                <meshStandardMaterial attachArray="material" color={colors.red}/>
+                <meshStandardMaterial attachArray="material" color={colors.green}/>
+                <meshStandardMaterial attachArray="material" color={colors.yellow}/>
+                <meshStandardMaterial attachArray="material" color={colors.orange}/>
             </mesh>
-            <lineSegments {...props} renderOrder={10}>
-                <boxGeometry args={[1, 1, 1]}/>
-                <lineBasicMaterial color="black" linewidth={100}/>
+            <lineSegments {...props} renderOrder={10} geometry={edges}>
+                <lineBasicMaterial color="black" linewidth={1}/>
             </lineSegments>
         </group>
     )

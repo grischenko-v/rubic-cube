@@ -1,6 +1,5 @@
-export function getBoxInitialPositions (size = 3) {
+export function getBoxInitialPositions (sideSize = 1) {
     const arr = [];
-    const sideSize = 1;
     for (let x = -sideSize; x <= sideSize; x++) {
         for(let y = -sideSize; y <= sideSize; y++) {
             for(let z= -sideSize; z <= sideSize; z++) {
