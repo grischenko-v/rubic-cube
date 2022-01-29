@@ -1,13 +1,14 @@
-### Rubic Cube example
+### Rubic Cube [example](https://grischenko-v.github.io/rubic-cube/)
 - create-react-app
 - react-three-fiber
 
 #### install
-```node
+```bash
 npm i
 ```
 
 #### start
-```node
+```bash
 npm run start
 ```
+#### Demo
