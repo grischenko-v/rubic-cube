@@ -1,4 +1,5 @@
 ### Rubik Cube [demo](https://grischenko-v.github.io/rubic-cube/)
+Made with ReactJS and ThreeJS
 - create-react-app
 - react-three-fiber
 
