@@ -1,4 +1,4 @@
-### Rubic Cube [example](https://grischenko-v.github.io/rubic-cube/)
+### Rubik Cube [demo](https://grischenko-v.github.io/rubic-cube/)
 - create-react-app
 - react-three-fiber
 
