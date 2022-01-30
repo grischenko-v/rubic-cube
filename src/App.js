@@ -8,6 +8,8 @@ import {
     getBoxInitialPositions, getRandomDirection
 } from './utils';
 
+const NEXT_ROTATION_TIMEOUT = 1000;
+
 const App = () => {
     const [points, setPoints] = useState(getBoxInitialPositions());
     const [animation, setAnimation] = useState(false);
@@ -27,7 +29,7 @@ const App = () => {
 
     useEffect(() => {
         if (!animation) {
-            setTimeout(() => startRotate(), 500);
+            setTimeout(startRotate, NEXT_ROTATION_TIMEOUT);
         }
     }, [animation]);
 
@@ -55,8 +57,6 @@ const App = () => {
     }
 
     return <>
-        {/*For Tests*/}
-        {/*<div style={{width: '80px', padding: '10px', background: 'red'}} onClick={startRotate}>Rotate!</div>*/}
         <Scene>
             <RubikCube animation={animation}
                        setAnimation={setAnimation}
