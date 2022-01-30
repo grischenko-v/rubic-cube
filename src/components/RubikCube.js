@@ -29,11 +29,11 @@ export const RubikCube = (props) => {
     }
 
     const updateCurrentCubeState = () => {
-        const updatedPoints = []
+        const updatedPoints = [];
         rotatedGroup.current.rotation[props.rotationAxisLetter] = props.rotationDirection === 'right' ?
             Math.PI / 2 : -Math.PI / 2;
 
-        rotatedGroup.current.children.map(child => getUpdatedPointData(child, updatedPoints))
+        rotatedGroup.current.children.map(child => getUpdatedPointData(child, updatedPoints));
 
         props.setPoints(points => ([
             ...points.filter(point => !updatedPoints.some(item => item.name === point.name)),
