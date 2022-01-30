@@ -3,11 +3,13 @@ import {useFrame} from '@react-three/fiber';
 import {BoxGroup} from './BoxGroup';
 
 const ROTATION_SPEED_DIVIDER = 100;
+const ANIMATION_ROTATION_DELTA = Math.PI / ROTATION_SPEED_DIVIDER;
+const ROTATION_ANGLE = Math.PI / 2;
 
 export const RubikCube = (props) => {
     const rotatedGroup = useRef();
 
-    const getUpdatedPointData = (child, arr) => {
+    const getUpdatedPointData = (child) => {
         const x = Math.round(child.children[0].position.x);
         const y = Math.round(child.children[0].position.y);
         const z = Math.round(child.children[0].position.z);
@@ -17,7 +19,7 @@ export const RubikCube = (props) => {
         child.children[0].applyMatrix4(rotatedGroup.current.matrixWorld);
         child.children[1].applyMatrix4(rotatedGroup.current.matrixWorld);
 
-        arr.push({
+        return {
             name: oldPoint.name,
             x: Math.round(child.children[0].position.x),
             y: Math.round(child.children[0].position.y),
@@ -25,21 +27,20 @@ export const RubikCube = (props) => {
             rotX: child.children[0].rotation.x,
             rotY: child.children[0].rotation.y,
             rotZ: child.children[0].rotation.z,
-        });
+        };
     }
 
     const updateCurrentCubeState = () => {
-        const updatedPoints = [];
         rotatedGroup.current.rotation[props.rotationAxisLetter] = props.rotationDirection === 'right' ?
-            Math.PI / 2 : -Math.PI / 2;
+            ROTATION_ANGLE : -ROTATION_ANGLE;
 
-        rotatedGroup.current.children.map(child => getUpdatedPointData(child, updatedPoints));
+        const updatedPoints = rotatedGroup.current.children.map(child => getUpdatedPointData(child));
 
         props.setPoints(points => ([
             ...points.filter(point => !updatedPoints.some(item => item.name === point.name)),
             ...updatedPoints,
         ]));
-        props.setAnimation(false);
+        props.setAnimation(false);  
     }
 
     const rotateCube = () => {
@@ -47,14 +48,14 @@ export const RubikCube = (props) => {
             return;
         }
         if (props.rotationDirection === 'right' &&
-            rotatedGroup.current.rotation[props.rotationAxisLetter] <= Math.PI / 2) {
-            rotatedGroup.current.rotation[props.rotationAxisLetter] += Math.PI / ROTATION_SPEED_DIVIDER;
+            rotatedGroup.current.rotation[props.rotationAxisLetter] <= ROTATION_ANGLE) {
+            rotatedGroup.current.rotation[props.rotationAxisLetter] += ANIMATION_ROTATION_DELTA;
         }
         if (props.rotationDirection === 'left' &&
-            rotatedGroup.current.rotation[props.rotationAxisLetter] >= -Math.PI / 2) {
-            rotatedGroup.current.rotation[props.rotationAxisLetter] -= Math.PI / ROTATION_SPEED_DIVIDER;
+            rotatedGroup.current.rotation[props.rotationAxisLetter] >= -ROTATION_ANGLE) {
+            rotatedGroup.current.rotation[props.rotationAxisLetter] -= ANIMATION_ROTATION_DELTA;
         }
-        if (Math.abs(rotatedGroup.current.rotation[props.rotationAxisLetter]) > Math.PI / 2) {
+        if (Math.abs(rotatedGroup.current.rotation[props.rotationAxisLetter]) > ROTATION_ANGLE) {
             setTimeout(() => {
                 updateCurrentCubeState();
                 rotatedGroup.current.rotation[props.rotationAxisLetter] = 0;
