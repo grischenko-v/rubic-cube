@@ -1,6 +1,7 @@
 import {useRef} from 'react';
 import {useFrame} from '@react-three/fiber';
 import {BoxGroup} from './BoxGroup';
+import {getRoundPosition} from '../utils';
 
 const ROTATION_SPEED_DIVIDER = 100;
 const ANIMATION_ROTATION_DELTA = Math.PI / ROTATION_SPEED_DIVIDER;
@@ -10,20 +11,14 @@ export const RubikCube = (props) => {
     const rotatedGroup = useRef();
 
     const getUpdatedPointData = (child) => {
-        const x = Math.round(child.children[0].position.x);
-        const y = Math.round(child.children[0].position.y);
-        const z = Math.round(child.children[0].position.z);
-
+        const {x, y, z} = getRoundPosition(child.children[0].position);
         const oldPoint = props.rotationSide.find(point => point.x === x && point.y === y && point.z === z);
 
-        child.children[0].applyMatrix4(rotatedGroup.current.matrixWorld);
-        child.children[1].applyMatrix4(rotatedGroup.current.matrixWorld);
+        child.children.forEach(child => child.applyMatrix4(rotatedGroup.current.matrixWorld))
 
         return {
             name: oldPoint.name,
-            x: Math.round(child.children[0].position.x),
-            y: Math.round(child.children[0].position.y),
-            z: Math.round(child.children[0].position.z),
+            ...getRoundPosition(child.children[0].position),
             rotX: child.children[0].rotation.x,
             rotY: child.children[0].rotation.y,
             rotZ: child.children[0].rotation.z,
@@ -40,7 +35,7 @@ export const RubikCube = (props) => {
             ...points.filter(point => !updatedPoints.some(item => item.name === point.name)),
             ...updatedPoints,
         ]));
-        props.setAnimation(false);  
+        props.setAnimation(false);
     }
 
     const rotateCube = () => {

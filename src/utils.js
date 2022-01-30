@@ -28,10 +28,15 @@ export function asixNumtoLetter(asix) {
     }
 }
 
-export function generateRandomIntegerInRange(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+export const generateRandomIntegerInRange = (min, max) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
 
-export function getRandomDirection() {
-    return Math.random() < 0.5 ? 'left' : 'right'
+export const getRandomDirection = () => Math.random() < 0.5 ? 'left' : 'right';
+
+export const getRoundPosition = (position) => {
+    return {
+        x: Math.round(position.x),
+        y: Math.round(position.y),
+        z: Math.round(position.z),
+    }
 }
