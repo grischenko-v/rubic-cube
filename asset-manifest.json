@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/rubic-cube/static/css/main.8129c632.css",
-    "main.js": "/rubic-cube/static/js/main.dcd3f4c0.js",
+    "main.js": "/rubic-cube/static/js/main.71ba2ad1.js",
     "index.html": "/rubic-cube/index.html",
     "main.8129c632.css.map": "/rubic-cube/static/css/main.8129c632.css.map",
-    "main.dcd3f4c0.js.map": "/rubic-cube/static/js/main.dcd3f4c0.js.map"
+    "main.71ba2ad1.js.map": "/rubic-cube/static/js/main.71ba2ad1.js.map"
   },
   "entrypoints": [
     "static/css/main.8129c632.css",
-    "static/js/main.dcd3f4c0.js"
+    "static/js/main.71ba2ad1.js"
   ]
 }
