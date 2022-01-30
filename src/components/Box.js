@@ -30,7 +30,6 @@ export const Box = (props) => {
     const edges = useMemo(() => new THREE.EdgesGeometry( geometry ), []);
     return (
         <group dispose={null}>
-            {/*<axesHelper args={[10]} />*/}
             <mesh {...props} castShadow={true} receiveShadow={true}>
                 <boxGeometry args={[1, 1, 1]}/>
                 {colors.map(color => <meshStandardMaterial attachArray="material" color={color}/>)}
